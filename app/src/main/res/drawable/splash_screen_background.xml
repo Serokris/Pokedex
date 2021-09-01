@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+
+    <item android:drawable="@color/cardview_dark_background"/>
+
+    <item
+        android:gravity="center"
+        android:drawable="@mipmap/pokeball"
+        android:width="180dp"
+        android:height="180dp"/>
+</layer-list>
