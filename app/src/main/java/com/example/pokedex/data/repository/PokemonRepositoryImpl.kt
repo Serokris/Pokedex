@@ -3,7 +3,7 @@ package com.example.pokedex.data.repository
 import com.example.pokedex.data.source.local.dao.PokemonDao
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.data.source.remote.PokeApiService
-import com.example.pokedex.domain.model.PokemonResponse
+import com.example.pokedex.domain.model.response.PokemonResponse
 import com.example.pokedex.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response

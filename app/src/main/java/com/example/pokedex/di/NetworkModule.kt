@@ -16,17 +16,12 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun providePokeApiService(): PokeApiService {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Singleton
-    @Provides
-    fun providePokeApiService(retrofit: Retrofit): PokeApiService {
-        return retrofit.create(PokeApiService::class.java)
+            .create(PokeApiService::class.java)
     }
 }

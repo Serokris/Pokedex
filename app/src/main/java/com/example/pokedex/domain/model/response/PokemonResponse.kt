@@ -1,4 +1,4 @@
-package com.example.pokedex.domain.model
+package com.example.pokedex.domain.model.response
 
 data class PokemonResponse(
     val id: Int,

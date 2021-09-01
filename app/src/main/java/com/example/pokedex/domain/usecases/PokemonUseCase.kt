@@ -1,7 +1,7 @@
 package com.example.pokedex.domain.usecases
 
 import com.example.pokedex.domain.model.Pokemon
-import com.example.pokedex.domain.model.PokemonResponse
+import com.example.pokedex.domain.model.response.PokemonResponse
 import com.example.pokedex.domain.repository.PokemonRepository
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
