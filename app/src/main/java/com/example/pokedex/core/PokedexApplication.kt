@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.core
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
