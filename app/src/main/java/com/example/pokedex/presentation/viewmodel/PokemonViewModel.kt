@@ -8,7 +8,9 @@ import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.domain.model.response.PokemonResponse
 import com.example.pokedex.domain.usecases.PokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -17,11 +19,11 @@ class PokemonViewModel @Inject constructor(
     private val pokemonUseCase: PokemonUseCase
 ) : ViewModel() {
     suspend fun getPokemonByName(name: String): Response<PokemonResponse> {
-        return pokemonUseCase.getPokemonByName(name)
+        return withContext(Dispatchers.IO) { pokemonUseCase.getPokemonByName(name) }
     }
 
     suspend fun getPokemonById(id: Int): Response<PokemonResponse> {
-        return pokemonUseCase.getPokemonById(id)
+        return withContext(Dispatchers.IO) { pokemonUseCase.getPokemonById(id) }
     }
 
     fun getAllFavoritePokemons(): LiveData<List<Pokemon>> {
@@ -29,18 +31,18 @@ class PokemonViewModel @Inject constructor(
     }
 
     suspend fun isAddedPokemonWithThisId(id: Int): Boolean? {
-        return pokemonUseCase.isAddedPokemonWithThisId(id)
+        return withContext(Dispatchers.IO) { pokemonUseCase.isAddedPokemonWithThisId(id) }
     }
 
     fun insert(pokemon: Pokemon) {
-        viewModelScope.launch { pokemonUseCase.insert(pokemon) }
+        viewModelScope.launch(Dispatchers.IO) { pokemonUseCase.insert(pokemon) }
     }
 
     fun delete(pokemon: Pokemon) {
-        viewModelScope.launch { pokemonUseCase.delete(pokemon) }
+        viewModelScope.launch(Dispatchers.IO) { pokemonUseCase.delete(pokemon) }
     }
 
     fun deleteAllFavoritePokemons() {
-        viewModelScope.launch { pokemonUseCase.deleteAllFavoritePokemons() }
+        viewModelScope.launch(Dispatchers.IO) { pokemonUseCase.deleteAllFavoritePokemons() }
     }
 }
