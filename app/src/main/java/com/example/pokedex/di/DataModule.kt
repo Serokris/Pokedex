@@ -4,7 +4,7 @@ import com.example.pokedex.data.repository.PokemonRepositoryImpl
 import com.example.pokedex.data.source.local.dao.PokemonDao
 import com.example.pokedex.data.source.remote.PokeApiService
 import com.example.pokedex.domain.repository.PokemonRepository
-import com.example.pokedex.domain.usecases.PokemonUseCase
+import com.example.pokedex.domain.interactor.PokemonInteractor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,13 +18,14 @@ class DataModule {
     @Provides
     fun providePokemonRepository(
         pokemonApiService: PokeApiService,
-        pokemonDao: PokemonDao) : PokemonRepository {
+        pokemonDao: PokemonDao
+    ) : PokemonRepository {
         return PokemonRepositoryImpl(pokemonApiService, pokemonDao)
     }
 
     @Singleton
     @Provides
-    fun providePokemonUseCase(pokemonRepository: PokemonRepository): PokemonUseCase {
-        return PokemonUseCase(pokemonRepository)
+    fun providePokemonInteractor(pokemonRepository: PokemonRepository): PokemonInteractor {
+        return PokemonInteractor(pokemonRepository)
     }
 }

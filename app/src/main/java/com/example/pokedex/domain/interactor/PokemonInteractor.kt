@@ -1,4 +1,4 @@
-package com.example.pokedex.domain.usecases
+package com.example.pokedex.domain.interactor
 
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.domain.model.response.PokemonResponse
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
-class PokemonUseCase @Inject constructor (private val pokemonRepository: PokemonRepository) {
+class PokemonInteractor @Inject constructor (private val pokemonRepository: PokemonRepository) {
     suspend fun getPokemonByName(name: String): Response<PokemonResponse> {
         return pokemonRepository.getPokemonByName(name)
     }

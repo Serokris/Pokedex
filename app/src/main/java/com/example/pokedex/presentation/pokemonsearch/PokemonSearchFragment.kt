@@ -16,9 +16,9 @@ import com.example.pokedex.databinding.FragmentPokemonSearchBinding
 import com.example.pokedex.utils.capitalized
 import com.example.pokedex.presentation.viewmodel.PokemonViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.example.pokedex.utils.thereIsInternetConnection
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PokemonSearchFragment : Fragment() {
