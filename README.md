@@ -25,4 +25,4 @@
 * [Gson](https://github.com/google/gson)
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
 * [Data binding](https://developer.android.com/topic/libraries/data-binding)
-* [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+* [Dagger 2](https://square.github.io/dagger/)

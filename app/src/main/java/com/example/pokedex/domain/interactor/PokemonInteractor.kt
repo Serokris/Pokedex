@@ -20,7 +20,7 @@ class PokemonInteractor @Inject constructor (private val pokemonRepository: Poke
         return pokemonRepository.getAllFavoritePokemons()
     }
 
-    suspend fun isAddedPokemonWithThisId(id: Int): Boolean? {
+    fun isAddedPokemonWithThisId(id: Int): Flow<Boolean> {
         return pokemonRepository.isAddedPokemonWithThisId(id)
     }
 

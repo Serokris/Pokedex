@@ -1,4 +1,4 @@
-package com.example.pokedex.di
+package com.example.pokedex.di.module
 
 import com.example.pokedex.data.repository.PokemonRepositoryImpl
 import com.example.pokedex.data.source.local.dao.PokemonDao
@@ -7,13 +7,10 @@ import com.example.pokedex.domain.repository.PokemonRepository
 import com.example.pokedex.domain.interactor.PokemonInteractor
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-class DataModule {
+object DataModule {
     @Singleton
     @Provides
     fun providePokemonRepository(

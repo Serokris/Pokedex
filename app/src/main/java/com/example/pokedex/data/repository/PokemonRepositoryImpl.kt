@@ -25,7 +25,7 @@ class PokemonRepositoryImpl @Inject constructor(
         return pokemonDao.getAllFavoritePokemons()
     }
 
-    override suspend fun isAddedPokemonWithThisId(id: Int): Boolean? {
+    override fun isAddedPokemonWithThisId(id: Int): Flow<Boolean> {
         return pokemonDao.isAddedPokemonWithThisId(id)
     }
 

@@ -12,7 +12,7 @@ interface PokemonRepository {
 
     fun getAllFavoritePokemons(): Flow<List<Pokemon>>
 
-    suspend fun isAddedPokemonWithThisId(id: Int): Boolean?
+    fun isAddedPokemonWithThisId(id: Int): Flow<Boolean>
 
     suspend fun insert(pokemon: Pokemon)
 

@@ -16,7 +16,7 @@ interface PokemonDao {
     suspend fun deleteAllFavoritePokemons()
 
     @Query("SELECT id FROM `pokemon-table` WHERE id == :id")
-    suspend fun isAddedPokemonWithThisId(id: Int): Boolean?
+    fun isAddedPokemonWithThisId(id: Int): Flow<Boolean>
 
     @Query("SELECT * FROM `pokemon-table`")
     fun getAllFavoritePokemons(): Flow<List<Pokemon>>

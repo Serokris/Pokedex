@@ -9,18 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.R
+import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentFavoritesPokemonsListBinding
-import com.example.pokedex.utils.observeOnce
+import com.example.pokedex.common.observeOnce
 import com.example.pokedex.presentation.viewmodel.PokemonViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class FavoritesPokemonsListFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels()
+    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +31,10 @@ class FavoritesPokemonsListFragment : Fragment() {
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.INVISIBLE
 
-        viewModel.getAllFavoritePokemons().observe(viewLifecycleOwner) { list ->
+        viewModel.getAllFavoritePokemons().observe(viewLifecycleOwner, { list ->
             adapter.submitList(list)
             binding.pikachuImage.visibility = if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
-        }
+        })
 
         binding.favoritesPokemonsRecyclerView.adapter = adapter
 

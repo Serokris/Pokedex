@@ -11,19 +11,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.example.pokedex.R
+import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentPokemonSearchBinding
-import com.example.pokedex.utils.capitalized
+import com.example.pokedex.common.capitalized
 import com.example.pokedex.presentation.viewmodel.PokemonViewModel
+import com.example.pokedex.common.observeOnce
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-import com.example.pokedex.utils.thereIsInternetConnection
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.pokedex.common.thereIsInternetConnection
 
-@AndroidEntryPoint
 class PokemonSearchFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels()
+    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
     private lateinit var pokemonImageUrl: String
 
     @SuppressLint("SetTextI18n")
@@ -46,9 +46,12 @@ class PokemonSearchFragment : Fragment() {
                             if (pokemonResponse != null) {
                                 pokemonIdText.text = pokemonResponse.id.toString()
                                 pokemonNameText.text = pokemonResponse.name.capitalized()
-                                pokemonHeightText.text = "${((pokemonResponse.height * 100) / 1000)}M"
-                                pokemonWeightText.text = "${((pokemonResponse.weight * 100) / 1000)}KG"
-                                Glide.with(requireContext()).load(pokemonResponse.sprites.frontDefault)
+                                pokemonHeightText.text =
+                                    "${((pokemonResponse.height * 100) / 1000)}M"
+                                pokemonWeightText.text =
+                                    "${((pokemonResponse.weight * 100) / 1000)}KG"
+                                Glide.with(requireContext())
+                                    .load(pokemonResponse.sprites.frontDefault)
                                     .into(pokemonImage)
                                 pokemonImageUrl = pokemonResponse.sprites.frontDefault
                             } else {
@@ -64,12 +67,16 @@ class PokemonSearchFragment : Fragment() {
                             }
                         }
                     } else {
-                        Toast.makeText(requireContext(), R.string.the_field_must_not_be_empty,
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.the_field_must_not_be_empty,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), R.string.no_internet_connection,
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(), R.string.no_internet_connection, Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
@@ -82,19 +89,26 @@ class PokemonSearchFragment : Fragment() {
                         pokemonWeightText.text.toString(),
                         pokemonImageUrl
                     )
-                    viewModel.viewModelScope.launch {
-                        if (viewModel.isAddedPokemonWithThisId(pokemon.id) == null) {
-                            viewModel.insert(pokemon)
-                            Toast.makeText(requireContext(), R.string.pokemon_has_been_added,
-                                Toast.LENGTH_SHORT).show()
+                    viewModel.isAddedPokemonWithThisId(pokemon.id).observeOnce { isAdded ->
+                        if (isAdded == true) {
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.this_pokemon_added_to_favorites,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            Toast.makeText(requireContext(), R.string.this_pokemon_added_to_favorites,
-                                Toast.LENGTH_SHORT).show()
+                            viewModel.insert(pokemon)
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.pokemon_has_been_added,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), R.string.failed_to_add_pokemon,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(), R.string.failed_to_add_pokemon, Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

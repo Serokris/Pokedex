@@ -1,4 +1,4 @@
-package com.example.pokedex.utils
+package com.example.pokedex.common
 
 object Constants {
     const val BASE_URL = "https://pokeapi.co/api/v2/"

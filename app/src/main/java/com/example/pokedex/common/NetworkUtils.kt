@@ -1,4 +1,4 @@
-package com.example.pokedex.utils
+package com.example.pokedex.common
 
 import android.content.Context
 import android.net.ConnectivityManager

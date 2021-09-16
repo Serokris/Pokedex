@@ -10,22 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.example.pokedex.R
+import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
-import com.example.pokedex.utils.thereIsInternetConnection
+import com.example.pokedex.common.thereIsInternetConnection
 import com.example.pokedex.databinding.FragmentShowRandomPokemonBinding
-import com.example.pokedex.utils.capitalized
+import com.example.pokedex.common.capitalized
 import com.example.pokedex.presentation.viewmodel.PokemonViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.pokedex.common.observeOnce
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-const val MIN_POKEMON_ID = 1
-const val MAX_POKEMON_ID = 898
+private const val MIN_POKEMON_ID = 1
+private const val MAX_POKEMON_ID = 898
 
-@AndroidEntryPoint
 class ShowRandomPokemonFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels()
+    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
     private lateinit var pokemonImageUrl: String
 
     override fun onCreateView(
@@ -47,16 +47,21 @@ class ShowRandomPokemonFragment : Fragment() {
                             pokemonNameText.text = randomPokemon.name.capitalized()
                             pokemonHeightText.text = randomPokemon.height.toString()
                             pokemonWeightText.text = randomPokemon.weight.toString()
-                            Glide.with(requireContext()).load(randomPokemon.sprites.frontDefault).into(pokemonImage)
+                            Glide.with(requireContext()).load(randomPokemon.sprites.frontDefault)
+                                .into(pokemonImage)
                             pokemonImageUrl = randomPokemon.sprites.frontDefault
                         } else {
-                            Toast.makeText(requireContext(), R.string.failed_to_generate_pokemon,
-                                Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(), R.string.failed_to_generate_pokemon,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), R.string.no_internet_connection,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(), R.string.no_internet_connection,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -69,19 +74,27 @@ class ShowRandomPokemonFragment : Fragment() {
                         pokemonWeightText.text.toString(),
                         pokemonImageUrl
                     )
-                    viewModel.viewModelScope.launch {
-                        if (viewModel.isAddedPokemonWithThisId(pokemon.id) == null) {
-                            viewModel.insert(pokemon)
-                            Toast.makeText(requireContext(), R.string.pokemon_has_been_added,
-                                Toast.LENGTH_SHORT).show()
+                    viewModel.isAddedPokemonWithThisId(pokemon.id).observeOnce { isAdded ->
+                        if (isAdded == true) {
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.this_pokemon_added_to_favorites,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            Toast.makeText(requireContext(), R.string.this_pokemon_added_to_favorites,
-                                Toast.LENGTH_SHORT).show()
+                            viewModel.insert(pokemon)
+                            Toast.makeText(
+                                requireContext(),
+                                R.string.pokemon_has_been_added,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), R.string.failed_to_add_pokemon,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(), R.string.failed_to_add_pokemon,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
