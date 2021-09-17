@@ -1,5 +1,6 @@
 package com.example.pokedex.presentation.showrandompokemon
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class ShowRandomPokemonFragment : Fragment() {
     private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
     private lateinit var pokemonImageUrl: String
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,8 +47,10 @@ class ShowRandomPokemonFragment : Fragment() {
                         if (randomPokemon != null) {
                             pokemonIdText.text = randomPokemon.id.toString()
                             pokemonNameText.text = randomPokemon.name.capitalized()
-                            pokemonHeightText.text = randomPokemon.height.toString()
-                            pokemonWeightText.text = randomPokemon.weight.toString()
+                            pokemonHeightText.text =
+                                "${((randomPokemon.height * 100F) / 1000F)}M"
+                            pokemonWeightText.text =
+                                "${((randomPokemon.weight * 100F) / 1000F)}KG"
                             Glide.with(requireContext()).load(randomPokemon.sprites.frontDefault)
                                 .into(pokemonImage)
                             pokemonImageUrl = randomPokemon.sprites.frontDefault

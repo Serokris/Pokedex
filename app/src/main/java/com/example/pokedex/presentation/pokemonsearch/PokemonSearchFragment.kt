@@ -47,9 +47,9 @@ class PokemonSearchFragment : Fragment() {
                                 pokemonIdText.text = pokemonResponse.id.toString()
                                 pokemonNameText.text = pokemonResponse.name.capitalized()
                                 pokemonHeightText.text =
-                                    "${((pokemonResponse.height * 100) / 1000)}M"
+                                    "${((pokemonResponse.height * 100F) / 1000F)}M"
                                 pokemonWeightText.text =
-                                    "${((pokemonResponse.weight * 100) / 1000)}KG"
+                                    "${((pokemonResponse.weight * 100F) / 1000F)}KG"
                                 Glide.with(requireContext())
                                     .load(pokemonResponse.sprites.frontDefault)
                                     .into(pokemonImage)

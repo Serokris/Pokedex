@@ -8,6 +8,7 @@ import com.example.pokedex.di.module.ContextModule
 class PokedexApplication : Application() {
 
     lateinit var appComponent: AppComponent
+        private set
 
     override fun onCreate() {
         super.onCreate()
