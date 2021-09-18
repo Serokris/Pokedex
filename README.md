@@ -3,7 +3,7 @@
 
 ## __Architecture__
 * Clean Architecture
-* Presentation layer architecture - MVVM
+* Presentation layer pattern - MVVM
 
 ## __Screenshots__
 

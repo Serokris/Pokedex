@@ -15,7 +15,6 @@ import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentPokemonSearchBinding
 import com.example.pokedex.common.capitalized
-import com.example.pokedex.presentation.viewmodel.PokemonViewModel
 import com.example.pokedex.common.observeOnce
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
@@ -23,7 +22,9 @@ import com.example.pokedex.common.thereIsInternetConnection
 
 class PokemonSearchFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
+    private val viewModel: PokemonSearchViewModel by viewModels {
+        appComponent.viewModelsFactory()
+    }
     private lateinit var pokemonImageUrl: String
 
     @SuppressLint("SetTextI18n")
@@ -97,7 +98,7 @@ class PokemonSearchFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            viewModel.insert(pokemon)
+                            viewModel.addToFavorites(pokemon)
                             Toast.makeText(
                                 requireContext(),
                                 R.string.pokemon_has_been_added,

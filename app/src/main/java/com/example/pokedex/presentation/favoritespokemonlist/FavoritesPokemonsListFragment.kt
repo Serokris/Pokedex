@@ -13,20 +13,21 @@ import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentFavoritesPokemonsListBinding
 import com.example.pokedex.common.observeOnce
-import com.example.pokedex.presentation.viewmodel.PokemonViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
 class FavoritesPokemonsListFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
+    private val viewModel: FavoritesPokemonListViewModel by viewModels {
+        appComponent.viewModelsFactory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding: FragmentFavoritesPokemonsListBinding = FragmentFavoritesPokemonsListBinding.inflate(inflater)
-        val adapter = PokemonListAdapter(requireContext())
+        val binding = FragmentFavoritesPokemonsListBinding.inflate(inflater)
+        val adapter = FavoritesPokemonListAdapter(requireContext())
 
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.INVISIBLE
@@ -77,7 +78,7 @@ class FavoritesPokemonsListFragment : Fragment() {
         viewModel.delete(pokemon)
         Snackbar.make(requireView(), "Pokemon deleted", Snackbar.LENGTH_LONG).apply {
             setAction("Undo") {
-                viewModel.insert(pokemon)
+                viewModel.addToFavorites(pokemon)
             }
             show()
         }
@@ -86,8 +87,10 @@ class FavoritesPokemonsListFragment : Fragment() {
     private fun deleteAllPokemons() {
         viewModel.getAllFavoritePokemons().observeOnce { list ->
             if (list.isEmpty()) {
-                Toast.makeText(requireContext(), R.string.you_dont_have_pokemons,
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(), R.string.you_dont_have_pokemons,
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 AlertDialog.Builder(requireContext())
                     .setTitle(R.string.confirm_action)

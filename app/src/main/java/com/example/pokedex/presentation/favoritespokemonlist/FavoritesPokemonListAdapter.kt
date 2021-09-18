@@ -10,11 +10,15 @@ import com.bumptech.glide.Glide
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.PokemonListItemBinding
 
-class PokemonListAdapter(private val context: Context) :
-    ListAdapter<Pokemon, PokemonListAdapter.ViewHolder>(DiffCallback) {
+class FavoritesPokemonListAdapter(private val context: Context) :
+    ListAdapter<Pokemon, FavoritesPokemonListAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(PokemonListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(
+            PokemonListItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

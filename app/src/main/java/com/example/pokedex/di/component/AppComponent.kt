@@ -4,7 +4,7 @@ import com.example.pokedex.di.module.*
 import com.example.pokedex.presentation.favoritespokemonlist.FavoritesPokemonsListFragment
 import com.example.pokedex.presentation.pokemonsearch.PokemonSearchFragment
 import com.example.pokedex.presentation.showrandompokemon.ShowRandomPokemonFragment
-import com.example.pokedex.presentation.viewmodel.ViewModelFactory
+import com.example.pokedex.di.common.ViewModelFactory
 import dagger.Component
 import javax.inject.Singleton
 

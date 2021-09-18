@@ -16,7 +16,6 @@ import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.common.thereIsInternetConnection
 import com.example.pokedex.databinding.FragmentShowRandomPokemonBinding
 import com.example.pokedex.common.capitalized
-import com.example.pokedex.presentation.viewmodel.PokemonViewModel
 import com.example.pokedex.common.observeOnce
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -26,7 +25,9 @@ private const val MAX_POKEMON_ID = 898
 
 class ShowRandomPokemonFragment : Fragment() {
 
-    private val viewModel: PokemonViewModel by viewModels { appComponent.viewModelsFactory() }
+    private val viewModel: ShowRandomPokemonViewModel by viewModels {
+        appComponent.viewModelsFactory()
+    }
     private lateinit var pokemonImageUrl: String
 
     @SuppressLint("SetTextI18n")
@@ -86,7 +87,7 @@ class ShowRandomPokemonFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            viewModel.insert(pokemon)
+                            viewModel.addToFavorites(pokemon)
                             Toast.makeText(
                                 requireContext(),
                                 R.string.pokemon_has_been_added,
