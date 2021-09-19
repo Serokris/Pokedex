@@ -13,12 +13,34 @@ import javax.inject.Singleton
 object NetworkModule {
     @Singleton
     @Provides
-    fun providePokeApiService(): PokeApiService {
+    fun providePokeApiService(
+        baseUrl: String,
+        coroutineCallAdapterFactory: CoroutineCallAdapterFactory,
+        gsonConverterFactory: GsonConverterFactory
+    ): PokeApiService {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(baseUrl)
+            .addCallAdapterFactory(coroutineCallAdapterFactory)
+            .addConverterFactory(gsonConverterFactory)
             .build()
             .create(PokeApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCoroutineCallAdapterFactory(): CoroutineCallAdapterFactory {
+        return CoroutineCallAdapterFactory.invoke()
+    }
+
+    @Singleton
+    @Provides
+    fun provideGsonConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
+    }
+
+    @Singleton
+    @Provides
+    fun providePokeApiServiceBaseUrl(): String {
+        return Constants.BASE_URL
     }
 }
