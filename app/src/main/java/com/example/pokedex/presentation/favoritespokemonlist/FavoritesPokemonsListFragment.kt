@@ -21,12 +21,19 @@ class FavoritesPokemonsListFragment : Fragment() {
     private val viewModel: FavoritesPokemonListViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
+    private lateinit var binding: FragmentFavoritesPokemonsListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentFavoritesPokemonsListBinding.inflate(inflater)
+        binding = FragmentFavoritesPokemonsListBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val adapter = FavoritesPokemonListAdapter(requireContext())
 
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
@@ -59,7 +66,6 @@ class FavoritesPokemonsListFragment : Fragment() {
         }).attachToRecyclerView(binding.favoritesPokemonsRecyclerView)
 
         setHasOptionsMenu(true)
-        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

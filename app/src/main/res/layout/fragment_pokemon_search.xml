@@ -13,21 +13,21 @@
             android:id="@+id/searchPokemonEdt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/round_shape"
-            android:hint="@string/pokemon_name"
-            android:textColorHint="@color/light_grey_100"
-            android:textColor="@color/primary_dark"
             android:fontFamily="@font/montserrat_regular"
+            android:hint="@string/pokemon_name"
+            android:maxLines="2"
             android:paddingStart="17dp"
             android:paddingEnd="12dp"
-            android:maxLines="2"
+            android:textColor="@color/primary_dark"
+            android:textColorHint="@color/light_grey_100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/searchPokemonButton"
@@ -41,19 +41,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchPokemonEdt"
-            app:layout_constraintVertical_bias="0.545"/>
+            app:layout_constraintVertical_bias="0.416" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/pokemon_card_background"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchPokemonEdt"
             tools:ignore="MissingConstraints">
@@ -69,13 +69,14 @@
                 android:gravity="center"
                 android:hint="@string/pokemon_id"
                 android:textColorHint="@color/cardview_dark_background"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/pokemonImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"/>
+                app:layout_constraintVertical_bias="1.0" />
 
             <View
                 android:id="@+id/view1"
@@ -85,7 +86,7 @@
                 android:background="@color/dark_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pokemonIdText"/>
+                app:layout_constraintTop_toBottomOf="@+id/pokemonIdText" />
 
             <TextView
                 android:id="@+id/pokemonNameText"
@@ -98,11 +99,12 @@
                 android:gravity="center"
                 android:hint="@string/pokemon_name"
                 android:textColorHint="@color/cardview_dark_background"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pokemonImage"/>
+                app:layout_constraintTop_toBottomOf="@+id/pokemonImage" />
 
             <View
                 android:id="@+id/view2"
@@ -112,7 +114,7 @@
                 android:background="@color/dark_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pokemonNameText"/>
+                app:layout_constraintTop_toBottomOf="@+id/pokemonNameText" />
 
             <ImageView
                 android:id="@+id/pokemonImage"
@@ -122,7 +124,7 @@
                 android:src="@mipmap/pokeball"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/heightImage"
@@ -136,7 +138,7 @@
                 app:layout_constraintHorizontal_bias="0.195"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pokemonNameText"
-                app:layout_constraintVertical_bias="1.0"/>
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/pokemonHeightText"
@@ -149,11 +151,12 @@
                 android:gravity="center"
                 android:hint="@string/pokemon_height"
                 android:textColorHint="@color/cardview_dark_background"
+                android:textColor="@color/white"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/heightImage"
-                app:layout_constraintTop_toBottomOf="@+id/pokemonNameText"/>
+                app:layout_constraintTop_toBottomOf="@+id/pokemonNameText" />
 
             <View
                 android:id="@+id/view3"
@@ -164,7 +167,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.126"
                 app:layout_constraintStart_toEndOf="@+id/heightImage"
-                app:layout_constraintTop_toBottomOf="@+id/pokemonHeightText"/>
+                app:layout_constraintTop_toBottomOf="@+id/pokemonHeightText" />
 
             <ImageView
                 android:id="@+id/weightImage"
@@ -175,7 +178,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.195"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/heightImage"/>
+                app:layout_constraintTop_toBottomOf="@+id/heightImage" />
 
             <TextView
                 android:id="@+id/pokemonWeightText"
@@ -188,11 +191,12 @@
                 android:gravity="center"
                 android:hint="@string/pokemon_weight"
                 android:textColorHint="@color/cardview_dark_background"
+                android:textColor="@color/white"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/heightImage"
-                app:layout_constraintTop_toBottomOf="@+id/view3"/>
+                app:layout_constraintTop_toBottomOf="@+id/view3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -200,7 +204,7 @@
             android:id="@+id/addToFavoriteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="12dp"
             android:backgroundTint="@color/orange"
             android:fontFamily="@font/montserrat_regular"
             android:text="@string/add_to_favorite"
@@ -209,7 +213,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

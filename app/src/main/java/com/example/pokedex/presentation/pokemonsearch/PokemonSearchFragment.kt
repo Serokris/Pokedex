@@ -25,14 +25,20 @@ class PokemonSearchFragment : Fragment() {
     private val viewModel: PokemonSearchViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
+    private lateinit var binding: FragmentPokemonSearchBinding
     private lateinit var pokemonImageUrl: String
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentPokemonSearchBinding.inflate(inflater)
+        binding = FragmentPokemonSearchBinding.inflate(inflater)
+        return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.VISIBLE
@@ -113,6 +119,5 @@ class PokemonSearchFragment : Fragment() {
                 }
             }
         }
-        return binding.root
     }
 }

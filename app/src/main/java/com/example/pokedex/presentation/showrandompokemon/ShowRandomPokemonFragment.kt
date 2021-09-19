@@ -28,14 +28,20 @@ class ShowRandomPokemonFragment : Fragment() {
     private val viewModel: ShowRandomPokemonViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
+    private lateinit var binding: FragmentShowRandomPokemonBinding
     private lateinit var pokemonImageUrl: String
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentShowRandomPokemonBinding.inflate(inflater)
+        binding = FragmentShowRandomPokemonBinding.inflate(inflater)
+        return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             showRandomPokemonButton.setOnClickListener {
@@ -103,6 +109,5 @@ class ShowRandomPokemonFragment : Fragment() {
                 }
             }
         }
-        return binding.root
     }
 }
