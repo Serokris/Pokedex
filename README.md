@@ -24,5 +24,5 @@
 * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 * [Gson](https://github.com/google/gson)
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
-* [Data binding](https://developer.android.com/topic/libraries/data-binding)
+* [View Binding](https://developer.android.com/topic/libraries/view-binding)
 * [Dagger 2](https://square.github.io/dagger/)
