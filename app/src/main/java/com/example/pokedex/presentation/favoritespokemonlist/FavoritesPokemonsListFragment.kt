@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -13,27 +12,23 @@ import com.example.pokedex.common.appComponent
 import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentFavoritesPokemonsListBinding
 import com.example.pokedex.common.observeOnce
+import com.example.pokedex.presentation.base.BaseBindingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
-class FavoritesPokemonsListFragment : Fragment() {
+class FavoritesPokemonsListFragment :
+    BaseBindingFragment<FragmentFavoritesPokemonsListBinding>(FragmentFavoritesPokemonsListBinding::inflate) {
 
     private val viewModel: FavoritesPokemonListViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
-    private lateinit var binding: FragmentFavoritesPokemonsListBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentFavoritesPokemonsListBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
 
+    private fun initViews() {
         val adapter = FavoritesPokemonListAdapter(requireContext())
 
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)

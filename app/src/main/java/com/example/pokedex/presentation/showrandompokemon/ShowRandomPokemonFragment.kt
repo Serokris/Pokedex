@@ -2,10 +2,7 @@ package com.example.pokedex.presentation.showrandompokemon
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -17,32 +14,28 @@ import com.example.pokedex.common.thereIsInternetConnection
 import com.example.pokedex.databinding.FragmentShowRandomPokemonBinding
 import com.example.pokedex.common.capitalized
 import com.example.pokedex.common.observeOnce
+import com.example.pokedex.presentation.base.BaseBindingFragment
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 private const val MIN_POKEMON_ID = 1
 private const val MAX_POKEMON_ID = 898
 
-class ShowRandomPokemonFragment : Fragment() {
+class ShowRandomPokemonFragment :
+    BaseBindingFragment<FragmentShowRandomPokemonBinding>(FragmentShowRandomPokemonBinding::inflate) {
 
     private val viewModel: ShowRandomPokemonViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
-    private lateinit var binding: FragmentShowRandomPokemonBinding
     private lateinit var pokemonImageUrl: String
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentShowRandomPokemonBinding.inflate(inflater)
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun initViews() {
         binding.apply {
             showRandomPokemonButton.setOnClickListener {
                 if (thereIsInternetConnection(requireContext())) {

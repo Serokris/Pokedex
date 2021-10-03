@@ -2,10 +2,7 @@ package com.example.pokedex.presentation.pokemonsearch
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -19,27 +16,23 @@ import com.example.pokedex.common.observeOnce
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import com.example.pokedex.common.thereIsInternetConnection
+import com.example.pokedex.presentation.base.BaseBindingFragment
 
-class PokemonSearchFragment : Fragment() {
+class PokemonSearchFragment :
+    BaseBindingFragment<FragmentPokemonSearchBinding>(FragmentPokemonSearchBinding::inflate) {
 
     private val viewModel: PokemonSearchViewModel by viewModels {
         appComponent.viewModelsFactory()
     }
-    private lateinit var binding: FragmentPokemonSearchBinding
     private lateinit var pokemonImageUrl: String
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentPokemonSearchBinding.inflate(inflater)
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun initViews() {
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.VISIBLE
 
