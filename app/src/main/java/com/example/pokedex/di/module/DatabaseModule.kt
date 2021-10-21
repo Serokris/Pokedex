@@ -2,8 +2,8 @@ package com.example.pokedex.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.pokedex.data.source.local.FavoritePokemonsDatabase
-import com.example.pokedex.common.Constants
+import com.example.data.source.local.FavoritePokemonsDatabase
+import com.example.pokedex.utils.Constants
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,7 +16,7 @@ object DatabaseModule {
         context.applicationContext,
         FavoritePokemonsDatabase::class.java,
         Constants.DB_NAME
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides

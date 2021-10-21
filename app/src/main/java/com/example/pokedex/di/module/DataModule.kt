@@ -1,10 +1,10 @@
 package com.example.pokedex.di.module
 
-import com.example.pokedex.data.repository.PokemonRepositoryImpl
-import com.example.pokedex.data.source.local.dao.PokemonDao
-import com.example.pokedex.data.source.remote.PokeApiService
-import com.example.pokedex.domain.repository.PokemonRepository
-import com.example.pokedex.domain.interactor.PokemonInteractor
+import com.example.data.repository.PokemonRepositoryImpl
+import com.example.data.source.local.dao.PokemonDao
+import com.example.data.source.remote.PokeApiService
+import com.example.domain.repository.PokemonRepository
+import com.example.domain.interactor.PokemonInteractor
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

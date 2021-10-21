@@ -1,5 +1,6 @@
 package com.example.pokedex.presentation.favoritespokemonlist
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.pokedex.domain.model.Pokemon
+import com.example.domain.model.Pokemon
 import com.example.pokedex.databinding.PokemonListItemBinding
 
 class FavoritesPokemonListAdapter(private val context: Context) :
@@ -28,12 +29,13 @@ class FavoritesPokemonListAdapter(private val context: Context) :
 
     inner class ViewHolder(private val binding: PokemonListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(pokemon: Pokemon) {
             binding.apply {
                 pokemonIdText.text = pokemon.id.toString()
                 pokemonNameText.text = pokemon.name
-                pokemonHeightText.text = pokemon.height
-                pokemonWeightText.text = pokemon.weight
+                pokemonHeightText.text = "${pokemon.height} M"
+                pokemonWeightText.text = "${pokemon.weight} KG"
                 Glide.with(context).load(pokemon.imageUrl).into(pokemonImage)
                 executePendingBindings()
             }

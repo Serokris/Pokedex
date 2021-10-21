@@ -7,15 +7,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
+import com.example.domain.common.Result
+import com.example.domain.model.Pokemon
 import com.example.pokedex.R
-import com.example.pokedex.common.appComponent
-import com.example.pokedex.domain.model.Pokemon
-import com.example.pokedex.common.thereIsInternetConnection
 import com.example.pokedex.databinding.FragmentShowRandomPokemonBinding
-import com.example.pokedex.common.capitalized
-import com.example.pokedex.common.observeOnce
 import com.example.pokedex.presentation.base.BaseBindingFragment
-import kotlinx.coroutines.launch
+import com.example.pokedex.utils.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlin.random.Random
 
 private const val MIN_POKEMON_ID = 1
@@ -38,35 +37,49 @@ class ShowRandomPokemonFragment :
     private fun initViews() {
         binding.apply {
             showRandomPokemonButton.setOnClickListener {
-                if (thereIsInternetConnection(requireContext())) {
-                    viewModel.viewModelScope.launch {
-                        val random = Random(System.currentTimeMillis())
-                        val randomPokemonId = random.nextInt(MIN_POKEMON_ID, MAX_POKEMON_ID)
-                        val randomPokemon = viewModel.getPokemonById(randomPokemonId).body()
+                val random = Random(System.currentTimeMillis())
+                val randomPokemonId = random.nextInt(MIN_POKEMON_ID, MAX_POKEMON_ID)
 
-                        if (randomPokemon != null) {
-                            pokemonIdText.text = randomPokemon.id.toString()
-                            pokemonNameText.text = randomPokemon.name.capitalized()
+                viewModel.getPokemonById(randomPokemonId).onEach { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            loadingPokemonProgressBar.hideView()
+                            pokemonImage.showView()
+
+                            val pokemonData = result.data!!
+                            pokemonIdText.text = pokemonData.id.toString()
+                            pokemonNameText.text = pokemonData.name.capitalized()
                             pokemonHeightText.text =
-                                "${((randomPokemon.height * 100F) / 1000F)}M"
+                                "${((pokemonData.height * 100F) / 1000F)} M"
                             pokemonWeightText.text =
-                                "${((randomPokemon.weight * 100F) / 1000F)}KG"
-                            Glide.with(requireContext()).load(randomPokemon.sprites.frontDefault)
+                                "${((pokemonData.weight * 100F) / 1000F)} KG"
+                            Glide.with(requireContext()).load(pokemonData.imageUrl)
                                 .into(pokemonImage)
-                            pokemonImageUrl = randomPokemon.sprites.frontDefault
-                        } else {
+                            pokemonImageUrl = pokemonData.imageUrl
+                        }
+                        is Result.Loading -> {
+                            pokemonImage.hideView()
+                            loadingPokemonProgressBar.showView()
+                        }
+                        is Result.Error -> {
+                            loadingPokemonProgressBar.hideView()
+                            pokemonImage.setImageResource(R.drawable.ic_not_found)
+                            pokemonImage.showView()
+
+                            val textViewList = listOf(
+                                pokemonIdText,
+                                pokemonNameText,
+                                pokemonWeightText,
+                                pokemonHeightText
+                            )
+                            textViewList.onEach { textView -> textView.text = "" }
+
                             Toast.makeText(
-                                requireContext(), R.string.failed_to_generate_pokemon,
-                                Toast.LENGTH_SHORT
+                                requireContext(), result.message, Toast.LENGTH_LONG
                             ).show()
                         }
                     }
-                } else {
-                    Toast.makeText(
-                        requireContext(), R.string.no_internet_connection,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                }.launchIn(viewModel.viewModelScope)
             }
 
             addToFavoriteButton.setOnClickListener {
@@ -74,10 +87,13 @@ class ShowRandomPokemonFragment :
                     val pokemon = Pokemon(
                         pokemonIdText.text.toString().toInt(),
                         pokemonNameText.text.toString(),
-                        pokemonHeightText.text.toString(),
-                        pokemonWeightText.text.toString(),
+                        pokemonHeightText.text.toString().filter { char -> char.isDigit() }
+                            .toFloat() / 10F,
+                        pokemonWeightText.text.toString().filter { char -> char.isDigit() }
+                            .toFloat() / 10F,
                         pokemonImageUrl
                     )
+
                     viewModel.isAddedPokemonWithThisId(pokemon.id).observeOnce { isAdded ->
                         if (isAdded == true) {
                             Toast.makeText(

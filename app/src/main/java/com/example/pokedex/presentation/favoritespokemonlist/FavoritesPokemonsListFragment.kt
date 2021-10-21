@@ -2,17 +2,20 @@ package com.example.pokedex.presentation.favoritespokemonlist
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.Pokemon
 import com.example.pokedex.R
-import com.example.pokedex.common.appComponent
-import com.example.pokedex.domain.model.Pokemon
 import com.example.pokedex.databinding.FragmentFavoritesPokemonsListBinding
-import com.example.pokedex.common.observeOnce
 import com.example.pokedex.presentation.base.BaseBindingFragment
+import com.example.pokedex.utils.appComponent
+import com.example.pokedex.utils.observeOnce
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
@@ -77,12 +80,13 @@ class FavoritesPokemonsListFragment :
 
     private fun deletePokemon(pokemon: Pokemon) {
         viewModel.delete(pokemon)
-        Snackbar.make(requireView(), "Pokemon deleted", Snackbar.LENGTH_LONG).apply {
-            setAction("Undo") {
-                viewModel.addToFavorites(pokemon)
-            }
-            show()
-        }
+
+        Snackbar.make(requireView(), "Pokemon deleted", Snackbar.LENGTH_LONG)
+            .setAction("Undo") { viewModel.addToFavorites(pokemon) }
+            .setTextColor(resources.getColor(R.color.white))
+            .setActionTextColor(resources.getColor(R.color.scarlet))
+            .setBackgroundTint(resources.getColor(R.color.dark_grey))
+            .show()
     }
 
     private fun deleteAllPokemons() {
@@ -93,7 +97,7 @@ class FavoritesPokemonsListFragment :
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                AlertDialog.Builder(requireContext())
+                val dialog = AlertDialog.Builder(requireContext())
                     .setTitle(R.string.confirm_action)
                     .setMessage("Delete all pokemons?")
                     .setPositiveButton("Confirm") { dialog, _ ->
@@ -102,7 +106,13 @@ class FavoritesPokemonsListFragment :
                     }
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.dismiss()
-                    }.create().show()
+                    }.create()
+                dialog.show()
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setTextColor(resources.getColor(R.color.scarlet))
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                    .setTextColor(resources.getColor(R.color.scarlet))
             }
         }
     }

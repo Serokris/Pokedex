@@ -7,7 +7,6 @@
     <string name="add_to_favorite">Add to favorite</string>
     <!-- Toast texts -->
     <string name="the_field_must_not_be_empty">The field must not be empty</string>
-    <string name="no_internet_connection">No internet connection</string>
     <string name="pokemon_height">Pokemon height</string>
     <string name="pokemon_weight">Pokemon weight</string>
     <string name="pokemon_id">Pokemon ID</string>
@@ -19,5 +18,4 @@
     <string name="confirm_action">Confirm action</string>
     <string name="you_dont_have_pokemons">You don\'t have any pokemon favorites</string>
     <string name="show_random_pokemon">Show random pokemon</string>
-    <string name="failed_to_generate_pokemon">Failed to generate pokemon</string>
 </resources>

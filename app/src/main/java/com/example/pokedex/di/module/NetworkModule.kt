@@ -1,7 +1,7 @@
 package com.example.pokedex.di.module
 
-import com.example.pokedex.data.source.remote.PokeApiService
-import com.example.pokedex.common.Constants
+import com.example.data.source.remote.PokeApiService
+import com.example.pokedex.utils.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides

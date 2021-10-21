@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dark_grey">#252525</color>
     <color name="light_grey_100">#736C6C</color>
+    <color name="scarlet">#ED5564</color>
     <!-- Items color bottom navigation -->
     <color name="primary_dark">#263144</color>
     <color name="orange">#FF7B00</color>

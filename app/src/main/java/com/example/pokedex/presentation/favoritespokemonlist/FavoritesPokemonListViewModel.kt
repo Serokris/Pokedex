@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.pokedex.domain.interactor.PokemonInteractor
-import com.example.pokedex.domain.model.Pokemon
+import com.example.domain.interactor.PokemonInteractor
+import com.example.domain.model.Pokemon
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,6 +13,7 @@ import javax.inject.Inject
 class FavoritesPokemonListViewModel @Inject constructor(
     private val interactor: PokemonInteractor
 ) : ViewModel() {
+
     fun addToFavorites(pokemon: Pokemon) {
         viewModelScope.launch(Dispatchers.IO) { interactor.insert(pokemon) }
     }
