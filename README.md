@@ -1,7 +1,14 @@
+# Description
+In this app, you can search for Pokémon by name, select random Pokémon, and add Pokémon to your
+favorites. This app was created to familiarize you with Clean Architecture and the library for
+dependency injection Dagger.
+
 ## __Links__
-* [API service used in this application](https://pokeapi.co/docs/v2) 
+
+* [API service used in this application](https://pokeapi.co/docs/v2)
 
 ## __Architecture__
+
 * Clean Architecture
 * Presentation layer pattern - MVVM
 
@@ -17,7 +24,7 @@
 
 ## __The main technologies used to create this application__
 
-* [Kotlin](https://developer.android.com/kotlin)
+* [Kotlin](https://kotlinlang.org/)
 * [Room](https://developer.android.com/jetpack/androidx/releases/room)
 * [Retrofit](https://square.github.io/retrofit/)
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
