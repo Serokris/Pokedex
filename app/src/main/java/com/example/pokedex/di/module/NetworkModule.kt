@@ -11,8 +11,9 @@ import javax.inject.Singleton
 
 @Module
 object NetworkModule {
-    @Singleton
+
     @Provides
+    @Singleton
     fun providePokeApiService(
         baseUrl: String,
         coroutineCallAdapterFactory: CoroutineCallAdapterFactory,
@@ -26,20 +27,20 @@ object NetworkModule {
             .create(PokeApiService::class.java)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideCoroutineCallAdapterFactory(): CoroutineCallAdapterFactory {
         return CoroutineCallAdapterFactory.invoke()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePokeApiServiceBaseUrl(): String {
         return Constants.BASE_URL
     }

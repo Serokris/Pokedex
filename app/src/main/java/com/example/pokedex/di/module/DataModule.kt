@@ -11,8 +11,9 @@ import javax.inject.Singleton
 
 @Module
 object DataModule {
-    @Singleton
+
     @Provides
+    @Singleton
     fun providePokemonRepository(
         pokemonApiService: PokeApiService,
         pokemonDao: PokemonDao
@@ -20,8 +21,8 @@ object DataModule {
         return PokemonRepositoryImpl(pokemonApiService, pokemonDao)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun providePokemonInteractor(pokemonRepository: PokemonRepository): PokemonInteractor {
         return PokemonInteractor(pokemonRepository)
     }

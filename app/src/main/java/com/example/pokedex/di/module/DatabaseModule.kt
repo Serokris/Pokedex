@@ -10,15 +10,15 @@ import javax.inject.Singleton
 
 @Module
 object DatabaseModule {
-    @Singleton
+
     @Provides
+    @Singleton
     fun provideFavoritePokemonsDatabase(context: Context) = Room.databaseBuilder(
         context.applicationContext,
         FavoritePokemonsDatabase::class.java,
         Constants.DB_NAME
     ).fallbackToDestructiveMigration().build()
 
-    @Singleton
     @Provides
     fun providePokemonDao(db: FavoritePokemonsDatabase) = db.pokemonDao()
 }

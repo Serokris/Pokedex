@@ -37,7 +37,8 @@ class PokemonInteractor @Inject constructor(private val pokemonRepository: Pokem
 
     fun getAllFavoritePokemons(): Flow<List<Pokemon>> = pokemonRepository.getAllFavoritePokemons()
 
-    fun isAddedPokemonWithThisId(id: Int): Flow<Boolean> = pokemonRepository.isAddedPokemonWithThisId(id)
+    fun isAddedPokemonWithThisId(id: Int): Flow<Boolean> =
+        pokemonRepository.isAddedPokemonWithThisId(id)
 
     suspend fun insert(pokemon: Pokemon) = pokemonRepository.insert(pokemon)
 

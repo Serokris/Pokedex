@@ -27,10 +27,58 @@ class PokemonSearchFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        subscribeUi()
         initViews()
     }
 
     @SuppressLint("SetTextI18n")
+    private fun subscribeUi() {
+        binding.apply {
+            viewModel.pokemon.observe(viewLifecycleOwner, { pokemonData ->
+                pokemonData?.let { pokemon ->
+                    pokemonIdText.text = pokemon.id.toString()
+                    pokemonNameText.text = pokemon.name.capitalized()
+                    pokemonHeightText.text =
+                        "${((pokemon.height * 100F) / 1000F)} M"
+                    pokemonWeightText.text =
+                        "${((pokemon.weight * 100F) / 1000F)} KG"
+                    Glide.with(requireContext()).load(pokemon.imageUrl)
+                        .into(pokemonImage)
+                    pokemonImageUrl = pokemon.imageUrl
+                }
+            })
+
+            viewModel.dataLoading.observe(viewLifecycleOwner, { isLoading ->
+                if (isLoading) {
+                    loadingPokemonProgressBar.showView()
+                    pokemonImage.hideView()
+                } else {
+                    loadingPokemonProgressBar.hideView()
+                    pokemonImage.showView()
+                }
+            })
+
+            viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->
+                if (errorMessage.isNotEmpty()) {
+                    pokemonImage.setImageResource(R.drawable.ic_not_found)
+
+                    val textViewList = listOf(
+                        pokemonIdText,
+                        pokemonNameText,
+                        pokemonWeightText,
+                        pokemonHeightText
+                    )
+                    textViewList.onEach { textView -> textView.text = "" }
+
+                    Toast.makeText(
+                        requireContext(), errorMessage, Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+        }
+    }
+
     private fun initViews() {
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.VISIBLE
@@ -39,46 +87,7 @@ class PokemonSearchFragment :
             searchPokemonButton.setOnClickListener {
                 if (!searchPokemonEdt.text.isNullOrEmpty()) {
                     val pokemonName = searchPokemonEdt.text?.trim().toString().lowercase()
-                    viewModel.getPokemonByName(pokemonName).onEach { result ->
-                        when (result) {
-                            is Result.Success -> {
-                                loadingPokemonProgressBar.hideView()
-                                pokemonImage.showView()
-
-                                val pokemonData = result.data!!
-                                pokemonIdText.text = pokemonData.id.toString()
-                                pokemonNameText.text = pokemonData.name.capitalized()
-                                pokemonHeightText.text =
-                                    "${((pokemonData.height * 100F) / 1000F)} M"
-                                pokemonWeightText.text =
-                                    "${((pokemonData.weight * 100F) / 1000F)} KG"
-                                Glide.with(requireContext()).load(pokemonData.imageUrl)
-                                    .into(pokemonImage)
-                                pokemonImageUrl = pokemonData.imageUrl
-                            }
-                            is Result.Loading -> {
-                                pokemonImage.hideView()
-                                loadingPokemonProgressBar.showView()
-                            }
-                            is Result.Error -> {
-                                loadingPokemonProgressBar.hideView()
-                                pokemonImage.setImageResource(R.drawable.ic_not_found)
-                                pokemonImage.showView()
-
-                                val textViewList = listOf(
-                                    pokemonIdText,
-                                    pokemonNameText,
-                                    pokemonWeightText,
-                                    pokemonHeightText
-                                )
-                                textViewList.onEach { textView -> textView.text = "" }
-
-                                Toast.makeText(
-                                    requireContext(), result.message, Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-                    }.launchIn(viewModel.viewModelScope)
+                    viewModel.getPokemonByName(pokemonName)
                 } else {
                     Toast.makeText(
                         requireContext(),

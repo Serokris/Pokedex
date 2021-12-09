@@ -1,11 +1,11 @@
 package com.example.pokedex.di.component
 
 import android.content.Context
-import com.example.pokedex.di.module.*
-import com.example.pokedex.presentation.favoritespokemonlist.FavoritesPokemonsListFragment
-import com.example.pokedex.presentation.pokemonsearch.PokemonSearchFragment
-import com.example.pokedex.presentation.showrandompokemon.ShowRandomPokemonFragment
 import com.example.pokedex.di.common.ViewModelFactory
+import com.example.pokedex.di.module.DataModule
+import com.example.pokedex.di.module.DatabaseModule
+import com.example.pokedex.di.module.NetworkModule
+import com.example.pokedex.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -20,9 +20,6 @@ import javax.inject.Singleton
 )
 @Singleton
 interface AppComponent {
-    fun inject(fragment: PokemonSearchFragment)
-    fun inject(fragment: ShowRandomPokemonFragment)
-    fun inject(fragment: FavoritesPokemonsListFragment)
     fun viewModelsFactory(): ViewModelFactory
 
     @Component.Builder
