@@ -5,7 +5,6 @@ import com.example.domain.common.Result
 import com.example.domain.interactor.PokemonInteractor
 import com.example.domain.model.Pokemon
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

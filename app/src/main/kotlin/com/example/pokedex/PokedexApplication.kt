@@ -6,13 +6,8 @@ import com.example.pokedex.di.component.DaggerAppComponent
 
 class PokedexApplication : Application() {
 
-    lateinit var appComponent: AppComponent
-        private set
-
-    override fun onCreate() {
-        super.onCreate()
-
-        appComponent = DaggerAppComponent.builder()
+    val appComponent: AppComponent by lazy(LazyThreadSafetyMode.NONE) {
+        DaggerAppComponent.builder()
             .context(this)
             .build()
     }

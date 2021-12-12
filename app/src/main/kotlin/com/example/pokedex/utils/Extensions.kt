@@ -1,6 +1,5 @@
 package com.example.pokedex.utils
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -9,7 +8,7 @@ import com.example.pokedex.di.component.AppComponent
 import java.util.*
 
 fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
-    observeForever(object: Observer<T> {
+    observeForever(object : Observer<T> {
         override fun onChanged(value: T) {
             removeObserver(this)
             observer(value)
@@ -18,7 +17,7 @@ fun <T> LiveData<T>.observeOnce(observer: (T) -> Unit) {
 }
 
 fun String.capitalized(): String {
-    return this.replaceFirstChar { char ->
+    return replaceFirstChar { char ->
         if (char.isLowerCase())
             char.titlecase(Locale.getDefault())
         else char.toString()
@@ -27,11 +26,3 @@ fun String.capitalized(): String {
 
 val Fragment.appComponent: AppComponent
     get() = (requireContext().applicationContext as PokedexApplication).appComponent
-
-fun View.showView() {
-    this.visibility = View.VISIBLE
-}
-
-fun View.hideView() {
-    this.visibility = View.INVISIBLE
-}

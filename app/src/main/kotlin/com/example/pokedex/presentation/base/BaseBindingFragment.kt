@@ -11,24 +11,25 @@ open class BaseBindingFragment<V : ViewBinding>(
     private val binder: (LayoutInflater, ViewGroup?, Boolean) -> V
 ) : Fragment() {
 
-    private var contentBinding: V? = null
+    protected var binding: V? = null
+        private set
 
-    protected val binding: V
-        get() = requireNotNull(contentBinding) {
-            "Binding is only valid between onCreateView and onDestroyView"
-        }
+    protected fun requireBinding(): V {
+        return checkNotNull(binding)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        contentBinding = binder.invoke(inflater, container, false)
+        val binding = binder.invoke(inflater, container, false)
+        this.binding = binding
         return binding.root
     }
 
     override fun onDestroyView() {
-        contentBinding = null
+        binding = null
         super.onDestroyView()
     }
 }

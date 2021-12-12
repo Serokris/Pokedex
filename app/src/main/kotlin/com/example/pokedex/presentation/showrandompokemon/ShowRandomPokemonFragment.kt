@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.domain.model.Pokemon
@@ -33,53 +35,52 @@ class ShowRandomPokemonFragment :
 
     @SuppressLint("SetTextI18n")
     private fun subscribeUi() {
-        binding.apply {
-            viewModel.pokemon.observe(viewLifecycleOwner, { pokemonData ->
-                pokemonData?.let { pokemon ->
-                    pokemonIdText.text = pokemon.id.toString()
-                    pokemonNameText.text = pokemon.name.capitalized()
-                    pokemonHeightText.text =
-                        "${((pokemon.height * 100F) / 1000F)} M"
-                    pokemonWeightText.text =
-                        "${((pokemon.weight * 100F) / 1000F)} KG"
-                    Glide.with(requireContext()).load(pokemon.imageUrl)
-                        .into(pokemonImage)
-                    pokemonImageUrl = pokemon.imageUrl
-                }
-            })
+        viewModel.pokemon.observe(viewLifecycleOwner) { pokemon ->
+            pokemon ?: return@observe
 
-            viewModel.dataLoading.observe(viewLifecycleOwner, { isLoading ->
-                if (isLoading) {
-                    loadingPokemonProgressBar.showView()
-                    pokemonImage.hideView()
-                } else {
-                    loadingPokemonProgressBar.hideView()
-                    pokemonImage.showView()
-                }
-            })
+            with(requireBinding()) {
 
-            viewModel.errorMessage.observe(viewLifecycleOwner, { errorMessage ->
-                if (errorMessage.isNotEmpty()) {
+                pokemonIdText.text = pokemon.id.toString()
+                pokemonNameText.text = pokemon.name.capitalized()
+                pokemonHeightText.text =
+                    "${((pokemon.height * 100F) / 1000F)} M"
+                pokemonWeightText.text =
+                    "${((pokemon.weight * 100F) / 1000F)} KG"
+                Glide.with(requireContext()).load(pokemon.imageUrl)
+                    .into(pokemonImage)
+                pokemonImageUrl = pokemon.imageUrl
+            }
+        }
+
+        viewModel.dataLoading.observe(viewLifecycleOwner) { isLoading ->
+            with(requireBinding()) {
+                loadingPokemonProgressBar.isVisible = isLoading
+                pokemonImage.isInvisible = isLoading
+            }
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            if (errorMessage.isNotEmpty()) {
+                with(requireBinding()) {
                     pokemonImage.setImageResource(R.drawable.ic_not_found)
 
-                    val textViewList = listOf(
+                    listOf(
                         pokemonIdText,
                         pokemonNameText,
                         pokemonWeightText,
                         pokemonHeightText
-                    )
-                    textViewList.onEach { textView -> textView.text = "" }
+                    ).onEach { textView -> textView.text = "" }
 
                     Toast.makeText(
                         requireContext(), errorMessage, Toast.LENGTH_LONG
                     ).show()
                 }
-            })
+            }
         }
     }
 
     private fun initViews() {
-        binding.apply {
+        requireBinding().apply {
             showRandomPokemonButton.setOnClickListener {
                 val random = Random(System.currentTimeMillis())
                 val randomPokemonId = random.nextInt(MIN_POKEMON_ID, MAX_POKEMON_ID)
@@ -91,9 +92,11 @@ class ShowRandomPokemonFragment :
                     val pokemon = Pokemon(
                         pokemonIdText.text.toString().toInt(),
                         pokemonNameText.text.toString(),
-                        pokemonHeightText.text.toString().filter { char -> char.isDigit() }
+                        pokemonHeightText.text.filter { char -> char.isDigit() }
+                            .toString()
                             .toFloat() / 10F,
-                        pokemonWeightText.text.toString().filter { char -> char.isDigit() }
+                        pokemonWeightText.text.filter { char -> char.isDigit() }
+                            .toString()
                             .toFloat() / 10F,
                         pokemonImageUrl
                     )

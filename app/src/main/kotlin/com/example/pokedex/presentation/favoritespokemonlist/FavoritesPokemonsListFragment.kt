@@ -28,6 +28,7 @@ class FavoritesPokemonsListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initViews()
     }
 
@@ -37,12 +38,13 @@ class FavoritesPokemonsListFragment :
         val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.visibility = View.INVISIBLE
 
-        viewModel.getAllFavoritePokemons().observe(viewLifecycleOwner, { list ->
+        viewModel.getAllFavoritePokemons().observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
-            binding.pikachuImage.visibility = if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
-        })
+            requireBinding().pikachuImage.visibility =
+                if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
+        }
 
-        binding.favoritesPokemonsRecyclerView.adapter = adapter
+        requireBinding().favoritesPokemonsRecyclerView.adapter = adapter
 
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             0,
@@ -61,7 +63,7 @@ class FavoritesPokemonsListFragment :
                 val pokemon = adapter.currentList[position]
                 deletePokemon(pokemon)
             }
-        }).attachToRecyclerView(binding.favoritesPokemonsRecyclerView)
+        }).attachToRecyclerView(requireBinding().favoritesPokemonsRecyclerView)
 
         setHasOptionsMenu(true)
     }

@@ -37,7 +37,6 @@ class FavoritesPokemonListAdapter(private val context: Context) :
                 pokemonHeightText.text = "${pokemon.height} M"
                 pokemonWeightText.text = "${pokemon.weight} KG"
                 Glide.with(context).load(pokemon.imageUrl).into(pokemonImage)
-                executePendingBindings()
             }
         }
     }
