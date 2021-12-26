@@ -9,7 +9,7 @@ dependency injection Dagger.
 
 ## __Architecture__
 
-* Clean Architecture
+* Architecture - Clean Architecture
 * Presentation layer pattern - MVVM
 
 ## __Screenshots__
