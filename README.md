@@ -1,4 +1,4 @@
-# Description
+# Pokedex App
 In this app, you can search for Pokémon by name, select random Pokémon, and add Pokémon to your
 favorites. This app was created to familiarize you with Clean Architecture and the library for
 dependency injection Dagger.
