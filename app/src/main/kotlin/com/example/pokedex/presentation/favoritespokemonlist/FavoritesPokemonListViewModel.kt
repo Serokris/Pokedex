@@ -15,7 +15,7 @@ class FavoritesPokemonListViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun addToFavorites(pokemon: Pokemon) {
-        viewModelScope.launch(Dispatchers.IO) { interactor.insert(pokemon) }
+        viewModelScope.launch(Dispatchers.IO) { interactor.add(pokemon) }
     }
 
     fun getAllFavoritePokemons(): LiveData<List<Pokemon>> {

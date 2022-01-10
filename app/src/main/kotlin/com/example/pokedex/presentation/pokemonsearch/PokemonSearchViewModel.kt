@@ -42,7 +42,7 @@ class PokemonSearchViewModel @Inject constructor(
     }
 
     fun addToFavorites(pokemon: Pokemon) {
-        viewModelScope.launch(Dispatchers.IO) { interactor.insert(pokemon) }
+        viewModelScope.launch(Dispatchers.IO) { interactor.add(pokemon) }
     }
 
     fun isAddedPokemonWithThisId(id: Int): LiveData<Boolean?> {

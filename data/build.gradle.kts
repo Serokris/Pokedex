@@ -34,6 +34,8 @@ android {
 
 val roomVersion: String by rootProject.extra
 val retrofitVersion: String by rootProject.extra
+val jUnitVersion: String by rootProject.extra
+val androidTestExtensionVersion: String by rootProject.extra
 
 dependencies {
     implementation(project(":domain"))
@@ -41,8 +43,8 @@ dependencies {
     implementation("javax.inject:javax.inject:1")
 
     // Testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$androidTestExtensionVersion")
 
     // Room components
     implementation("androidx.room:room-ktx:$roomVersion")

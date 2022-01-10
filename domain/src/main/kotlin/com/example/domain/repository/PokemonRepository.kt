@@ -4,6 +4,7 @@ import com.example.domain.model.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
+
     suspend fun getPokemonByName(name: String): Pokemon
 
     suspend fun getPokemonById(id: Int): Pokemon
