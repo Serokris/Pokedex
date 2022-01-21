@@ -22,4 +22,5 @@ dependencies {
     // Testing
     testImplementation("junit:junit:$jUnitVersion")
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")}
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
+}
